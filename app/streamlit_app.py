@@ -1,8 +1,8 @@
 import streamlit as st
 import re
 import pandas as pd
-from app.database import execute_postgresql_query, create_table_from_dataframe, get_table_schema
-from app.agent import query_agent
+from database import execute_postgresql_query, create_table_from_dataframe, get_table_schema
+from agent import query_agent
 
 # Streamlit app
 def main():
