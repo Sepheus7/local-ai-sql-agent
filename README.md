@@ -13,8 +13,7 @@ This project is an AI-powered SQL agent that can generate SQL queries from natur
 1. Clone the repository:
 
     ```sh
-    git clone https://github.com/yourusername/ai-sql-agent.git
-    cd ai-sql-agent
+    git clone https://github.com/Sepheus7/local-ai-sql-agent.git
     ```
 
 2. Build and run the application using Docker Compose:
@@ -31,17 +30,17 @@ This project is an AI-powered SQL agent that can generate SQL queries from natur
 
 To stop the application, press `Ctrl+C` in the terminal where Docker Compose is running, or run:
 
-    ```sh
-    docker-compose down
-    ```
+```sh
+docker-compose down
+```
 
 ## Cleaning Up
 
 To remove the Docker containers and volumes, run:
 
-    ```sh
-    docker-compose down -v
-    ```
+```sh
+docker-compose down -v
+```
 
 ## Database Population
 
@@ -66,7 +65,8 @@ ai-sql-agent/
 ├── tests/
 │   ├── __init__.py
 │   ├── test_agent.py
-│   └── test_database.py
+│   ├── test_database.py
+|   └── test_streamlit_app.py
 └── requirements.txt
 ```
 
