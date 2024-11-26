@@ -1,0 +1,28 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - RUNNING_IN_DOCKER=true
+    depends_on:
+      - db
+    command: >
+      sh -c "
+      python app/populate_db.py &&
+      streamlit run app/streamlit_app.py
+      "
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

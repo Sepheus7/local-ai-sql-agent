@@ -1,0 +1,9 @@
+pandas
+sqlalchemy
+jupyter
+openai
+requests
+psycopg2-binary
+faker
+streamlit
+python-dotenv
