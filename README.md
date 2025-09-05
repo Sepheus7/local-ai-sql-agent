@@ -1,14 +1,16 @@
-# AI SQL Agent (Amazon Bedrock + Function Calling) — Streamlit + HF Space
+# AI SQL Agent — Streamlit (OpenAI or Amazon Bedrock)
 
-Build a production-ready AI SQL Agent that turns natural language into safe SQL, executes it, and presents results in a polished Streamlit UI. Orchestrated via Amazon Bedrock with function calling (tool-use). Demo-first for Hugging Face Spaces; runs locally too.
+Natural-language to SQL with safe execution against a local SQLite database. Choose OpenAI (easy demo) or Amazon Bedrock. Includes schema-aware prompting, ERD visualization, and a polished Streamlit UI.
 
 Features
 
-- Bedrock function calling: schema-aware SQL generation with tool-use.
-- Safe execution: SELECT-only, LIMIT and timeout enforced, validator.
-- Clean data: reproducible dataset from Hugging Face; migrations and seeding.
-- Great UX: Streamlit app with schema browser, history, export.
-- CI-ready: tests (unit/integration/golden), linting, optional Space deploy.
+- OpenAI or Bedrock provider: pick in the sidebar; OpenAI default for easy demos.
+- Schema-aware prompting: compact schema overview is injected for better SQL.
+- Safety: SELECT-only, forbidden keyword checks, enforced LIMIT.
+- Data model tab: seed Baseball demo data, view ERD, and per-table schema dropdowns.
+- Results UX: table preview, CSV download, quick charts (bar/line when suitable).
+- Makefile: one-command demo; `db.reset` seeds SQLite automatically.
+- Quality: tests, pre-commit (ruff/black/isort/nbstripout), GitHub Actions CI.
 
 Quickstart (local, venv)
 
@@ -32,6 +34,11 @@ make db.reset  # recreates the DB and seeds Baseball CSVs
 streamlit run app/app.py
 ```
 
+Or one command demo:
+```bash
+make demo
+```
+
 Quickstart (conda)
 
 ```bash
@@ -50,10 +57,15 @@ Required environment variables
 
 Provider selection
 
-- In the app sidebar, choose the LLM provider:
-  - OpenAI: paste your `OPENAI_API_KEY` and the app will call the Chat Completions API.
-  - Bedrock: uses your AWS credentials from environment/secrets to call the selected Bedrock model.
-- You can also set `LLM_PROVIDER=openai|bedrock` in the environment. Default is `openai` for easy demos.
+- In the app sidebar, choose the provider:
+  - OpenAI: paste your `OPENAI_API_KEY` (default path).
+  - Bedrock: uses AWS creds from environment to call your model.
+- You can also set `LLM_PROVIDER=openai|bedrock` as an environment variable.
+
+How to use
+- Open the app → go to the “Data model” tab → click “Seed demo data”.
+- Return to “Query” tab → ask a question → Generate SQL → Run SQL.
+- Explore charts and export results; view ERD and per-table schemas in “Data model”.
 
 Hugging Face Spaces
 
@@ -66,17 +78,26 @@ Repository layout
 
 ```
 app/                # Streamlit app (app.py entrypoint)
-src/                # agent core, clients, data loaders, db adapters, utils
-tests/              # unit, integration, golden sql tests
-infra/              # docker, space.yaml, gh actions, optional aws scripts
-docs/               # PRD, architecture, ERD, screenshots
-examples/           # example queries and flows
+src/                # agent core, providers, db adapters, data seeder, utils
+tests/              # unit tests (guardrails, etc.)
+infra/              # CI workflow, HF Space config; aws scripts paused under infra/aws
+docs/               # PRD and assets
+notebooks/          # exploratory notebooks (outputs stripped)
 ```
 
-Status
+Development
 
-- M1: Repo structure & PRD docs
-- Next: Wire Bedrock function-calling tools and schema browser; add golden tests
+- Pre-commit
+```bash
+pip install pre-commit && pre-commit install
+pre-commit run -a
+```
+
+- Tests & CI
+```bash
+pytest -q
+```
+CI runs ruff/black and pytest on PRs.
 
 License
 MIT — see LICENSE
