@@ -1,0 +1,9 @@
+title: AI SQL Agent — Bedrock + Streamlit
+sdk: streamlit
+app_file: app/app.py
+python_version: 3.10
+emoji: 🧠
+hardware: cpu-basic
+short_description: Natural language to SQL with Bedrock function calling and safe execution.
+
+

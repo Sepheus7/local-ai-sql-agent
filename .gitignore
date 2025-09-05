@@ -1,0 +1,11 @@
+.env
+data/
+*.ipynb_checkpoints/
+**/__pycache__/
+*.DS_Store
+test.db
+local-ai-sql-agent/models/
+local-ai-sql-agent/*.gguf
+.venv/
+.pytest_cache/
+notebooks/
